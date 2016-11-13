@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="button" value="add" onclick="add(1)"/>
+<input type="button" value="minus" onclick="minus(1)"/>
+<!--참고 페이지-->
+<!--http://stackoverflow.com/questions/5100376/how-to-watch-for-array-changes-->
+<!--https://www.google.co.kr/search?q=javascript+collection+change+event&oq=javascript+collection+change+event&aqs=chrome..69i57.5247j0j4&sourceid=chrome&ie=UTF-8-->
+<script>
+    var tmpList = []
+
+    function add(a){
+        tmpList.push(a)
+    }
+    function minus(a){
+        tmpList = tmpLIst.slice(0,tmpList.length)
+    }
+    tmpList.onchange = function(){
+        console.log("change event")
+    }
+    //    object.addEventListener("change", myScript);
+
+</script>
+</body>
+</html>
