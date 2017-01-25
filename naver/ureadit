@@ -1,0 +1,5 @@
+	@RequestMapping(value="action/auth/social/naver/redirect")
+	public String naverLogin(HttpServletRequest request) {
+//		return NAVER_LOGIN_POPUP + EMPTY_SUFFIX;
+		return "redirect:/resources/okky1.html";
+	}
