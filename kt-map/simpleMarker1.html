@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+
+	<style type="text/css">
+		html { height: 100% }
+		body { height: 100%; margin: 0; padding: 0 }
+		#map_div { height: 100% }
+	</style>
+	<script type="text/javascript" src="http://api.ktgis.com:10080/v3/olleh/mapAPI.js?key=키&module=Map"></script>
+
+	<script type="text/javascript">
+
+		var map;
+		var marker, leafMarker, animMarker, flatMarker;
+		function initialize () {
+			var initPosition = new olleh.maps.UTMK(957985.70, 1944917.52);
+			var mapOpts = {
+				zoom: 8,
+				center: initPosition,
+				mapTypeId: 'ROADMAP'
+			};
+			var map = new olleh.maps.Map(document.getElementById('map_div'), mapOpts);
+
+			marker = new olleh.maps.overlay.Marker({
+				position: initPosition,
+				map: map
+			});
+
+			initPosition = new olleh.maps.UTMK(957085.70, 1944017.52);
+			leafMarker = new olleh.maps.overlay.Marker({
+				position: initPosition,
+				icon: {
+					url: 'http://api.ktgis.com:10080/ollehmap/resource/v3/img/leaf-red.png',
+					size: new olleh.maps.Size(40, 97),
+					anchor: new olleh.maps.Point(22, 97)
+				},
+				shadow: {
+					url: 'http://api.ktgis.com:10080/ollehmap/resource/v3/img/leaf-shadow.png',
+					size: new olleh.maps.Size(52, 66),
+					anchor: new olleh.maps.Point(4, 66)
+				},
+				caption: 'icon변경',
+				map: map
+			});
+
+			initPosition = new olleh.maps.UTMK(957785.70, 1944017.52);
+			animMarker = new olleh.maps.overlay.Marker({
+				position: initPosition,
+				animation: olleh.maps.overlay.Marker.BOUNCE, // 제자리에서 통통튀는 Bounce 애니메이션 동작
+				caption: 'Animation',
+				map: map
+			});
+
+			initPosition = new olleh.maps.UTMK(957785.70, 1944617.52);
+			flatMarker = new olleh.maps.overlay.Marker({
+				position: initPosition,
+				flat: true, // 마커를 2D로 표현 (그림자가 없음)
+				caption: 'Flat',
+				map: map
+			});
+
+		};
+		window.onload = initialize;
+	</script>
+</head>
+<body>
+
+<div id="map_div" style="width: 100%;height: 100%;"></div>
+
+</body>
+</html>

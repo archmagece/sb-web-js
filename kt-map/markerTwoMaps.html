@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+
+	<style type="text/css">
+		html { height: 100% }
+		body { height: 100%; margin: 0; padding: 0 }
+		.map-wrapper{
+			height:100%;
+			width:100%;
+			/*float: left;*/
+		}
+		.map-view{
+			margin:20px;
+			display: inline-block;
+			height:500px;
+			width:40%;
+		}
+	</style>
+	<script type="text/javascript" src="http://api.ktgis.com:10080/v3/olleh/mapAPI.js?key=T2xsZWhNYXBFWDAwNTE6dlQwUzROMVZkaQ&module=Map"></script>
+
+	<script type="text/javascript">
+		var mapBank = {}
+		var initPositionBank = {}
+		var markerBank = {}
+	</script>
+
+	<script type="text/javascript">
+		function initializeMap () {
+			//0번맵
+			initPositionBank[0] = new olleh.maps.UTMK(957985.70, 1944917.52);
+			mapBank[0] = new olleh.maps.Map(document.getElementById('mapDiv0'), {
+				zoom: 8,
+				center: initPositionBank[0],
+				mapTypeId: 'ROADMAP'
+			});
+
+			//1번맵
+			initPositionBank[1] = new olleh.maps.UTMK(957985.70, 1944917.52);
+			mapBank[1] = new olleh.maps.Map(document.getElementById('mapDiv1'), {
+				zoom: 8,
+				center: initPositionBank[1],
+				mapTypeId: 'ROADMAP'
+			});
+		}
+	</script>
+
+	<script type="text/javascript">
+		function initializeMarker(){
+			markerBank[001] = new olleh.maps.overlay.Marker({
+				position: new olleh.maps.UTMK(957085.70, 1944017.52),
+				map: mapBank[0]
+			});
+
+			markerBank[002] = new olleh.maps.overlay.Marker({
+				position: new olleh.maps.UTMK(957085.70, 1944017.52),
+				icon: {
+					url: 'http://api.ktgis.com:10080/ollehmap/resource/v3/img/leaf-red.png',
+					size: new olleh.maps.Size(40, 97),
+					anchor: new olleh.maps.Point(22, 97)
+				},
+				shadow: {
+					url: 'http://api.ktgis.com:10080/ollehmap/resource/v3/img/leaf-shadow.png',
+					size: new olleh.maps.Size(52, 66),
+					anchor: new olleh.maps.Point(4, 66)
+				},
+				caption: 'icon변경',
+				map: mapBank[0]
+			});
+
+			markerBank[003] = new olleh.maps.overlay.Marker({
+				position: new olleh.maps.UTMK(957785.70, 1944017.52),
+				animation: olleh.maps.overlay.Marker.BOUNCE, // 제자리에서 통통튀는 Bounce 애니메이션 동작
+				caption: 'Animation',
+				map: mapBank[0]
+			});
+
+			markerBank[004] = new olleh.maps.overlay.Marker({
+				position: new olleh.maps.UTMK(957785.70, 1944617.52),
+				flat: true, // 마커를 2D로 표현 (그림자가 없음)
+				caption: 'Flat',
+				map: mapBank[0]
+			});
+		}
+		window.onload = function(){
+			initializeMap()
+			initializeMarker()
+		};
+	</script>
+</head>
+<body>
+
+<div class="map-wrapper">
+	<div>
+		<div id="mapDiv0" class="map-view"></div>
+		<div id="mapDiv1" class="map-view"></div>
+	</div>
+	<div>
+		<button type="button" id="button0">move to 1</button>
+		<button type="button" id="button1">move to 0</button>
+		<button type="button" id="buttonHideAll">hide all</button>
+		<button type="button" id="buttonShowAll">show all</button>
+	</div>
+</div>
+
+
+<script>
+//	document.getElementById('button0').addEventListener('click', function() {
+//		alert('Hello world');
+//	}, false);
+
+//https://www.ollehmap.com/javascript-v3-0-api/
+	document.getElementById('button0').onclick = function() {
+		moveMarkerTo(mapBank[1])
+	}
+	document.getElementById('button1').onclick = function() {
+		moveMarkerTo(mapBank[0])
+	}
+
+	function moveMarkerTo(map){
+		Object.keys(markerBank).forEach(function (item, index) {
+			markerBank[item].setMap(map)
+		})
+	}
+
+/**
+ * 모두 숨기기
+ */
+document.getElementById('buttonHideAll').onclick = function() {
+	Object.keys(markerBank).forEach(function(item, index){
+		markerBank[item].detach()
+	})
+}
+
+/**
+ * 모두 보이기
+ */
+document.getElementById('buttonShowAll').onclick = function() {
+	Object.keys(markerBank).forEach(function(item, index){
+		markerBank[item].attach()
+	})
+}
+</script>
+</body>
+</html>
